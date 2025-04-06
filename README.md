@@ -17,7 +17,7 @@ AI Tutor is a sleek, aesthetic, and intelligent web app built with Streamlit and
 
 ## 🖥️ Live Demo
 
-👉 [Coming Soon: Deployed on Streamlit Cloud](https://share.streamlit.io/)
+👉 [ Deployed on Streamlit Cloud]>>(https://aitutor-yourhonour.streamlit.app/)
 
 ---
 
@@ -34,5 +34,5 @@ AI Tutor is a sleek, aesthetic, and intelligent web app built with Streamlit and
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/rutu99/ai-tutor.git
-   cd ai-tutor
+   git clone https://github.com/rutu99/AI-tutor.git
+   cd AI-tutor
