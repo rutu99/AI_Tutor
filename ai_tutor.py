@@ -11,7 +11,14 @@ GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 if not GOOGLE_API_KEY:
     st.error("⚠️ Google GenAI API key is missing!.")
     st.stop()
-model = genai.GenerativeModel("gemini-1.5-pro")
+    
+model = genai.GenerativeModel(
+    "gemini-1.5-pro",
+    system_instruction="You're an expert AI tutor who ONLY answers questions related to AI, ML, DL, Python, and Data Science. "
+                       "Always answer clearly and in details. You never answer anything outside this domain. "
+                       "If asked an unrelated question, politely redirect to AI topics."
+)
+
 
 # ============ Chat History ============
 if "history" not in st.session_state:
