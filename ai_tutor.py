@@ -12,12 +12,9 @@ if not GOOGLE_API_KEY:
     st.error("⚠️ Google GenAI API key is missing!.")
     st.stop()
     
-model = genai.GenerativeModel(
-    "gemini-1.5-pro",
-    system_instruction="You're an expert AI tutor who ONLY answers questions related to AI, ML, DL, Python, and Data Science. "
+model = genai.GenerativeModel("gemini-1.5-pro", system_instruction="You're an expert AI tutor who ONLY answers questions related to AI, ML, DL, Python, and Data Science. "
                        "Always answer clearly and in details. You never answer anything outside this domain. "
-                       "If asked an unrelated question, politely redirect to AI topics."
-)
+                       "'If asked something unrelated, respond with: ‘I do respect and appreciate your curiosity, but sorry it's not my expertise so I'm out!!’")
 
 
 # ============ Chat History ============
@@ -27,19 +24,6 @@ if "history" not in st.session_state:
 # ============ Theme State ============
 if "theme" not in st.session_state:
     st.session_state.theme = "dark"
-
-# ============ Domain Validation ============
-class Query(BaseModel):
-    text: str
-
-    def is_relevant(self) -> bool:
-        keywords = [
-            "data", "information", "data science", "machine learning", "deep learning", "neural network",
-            "AI", "artificial intelligence", "python", "pandas", "numpy", "regression",
-            "classification", "nlp", "natural language processing", "llm", "generative",
-            "data analysis", "statistics", "EDA", "SQL", "big data", "analytics"
-        ]
-        return any(word in self.text.lower() for word in keywords)
 
 # ============ UI Styles ============
 st.markdown(
@@ -134,16 +118,12 @@ with st.sidebar:
 user_input = st.text_area("Ask a data science question:", key="input")
 
 if st.button("Ask the Tutor") and user_input:
-    query = Query(text=user_input)
     with st.spinner("Summonning the DATA GODS 🧠✨"):
-        if query.is_relevant():
-            response = model.generate_content(user_input).text
-        else:
-            response = "I do respect and appreciate your curiosity but sorry it's not my expertise so I'm out."
+        response = model.generate_content(user_input).text
     st.session_state.history.append((user_input, response))
     st.success("Here's what I think:")
     st.markdown(f"<div class='custom-response'>{response}</div>", unsafe_allow_html=True)
-
+    
 # ============ Chat History Display ============
 st.markdown("\n---\n")
 st.subheader("Previous Chats")
